@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+import enum
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
@@ -63,3 +64,86 @@ class User(db.Model):
             return user
         else:
             return False
+
+
+class Board(db.Model):
+    """Board."""
+
+    __tablename__ = "boards"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    name = db.Column(
+        db.Text,
+        nullable=False,
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='cascade')
+    )
+
+    """
+    position = db.Column(
+        db.Text,
+        nullable=False,
+        unique=True,
+    )
+    """
+
+class List(db.Model):
+    """List."""
+
+    __tablename__ = "lists"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    name = db.Column(
+        db.Text,
+        nullable=False,
+    )
+
+    board_id = db.Column(
+        db.Integer,
+        db.ForeignKey('boards.id', ondelete='cascade')
+    )
+
+
+
+class CardStatusEnum(enum.Enum):
+    done = 'done'
+    WIP = 'WIP'
+    cancelled = "cancelled"
+
+class Card(db.Model):
+    """Card."""
+
+    __tablename__ = "cards"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    name = db.Column(
+        db.Text,
+        nullable=False,
+    )
+
+
+    card_status = db.Column(
+        db.Enum(CardStatusEnum), 
+        default= CardStatusEnum.WIP,
+        nullable=False
+    )
+
+    list_id = db.Column(
+        db.Integer,
+        db.ForeignKey('lists.id', ondelete='cascade')
+    )

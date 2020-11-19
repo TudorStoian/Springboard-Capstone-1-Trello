@@ -35,7 +35,8 @@ connect_db(app)
 
 
 
-
+###########################################################################
+# Users and the creation, login and logout system
 
 @app.before_request
 def add_user_to_g():
@@ -130,8 +131,75 @@ def logout():
     else:
         flash("Not logged in to start with!.", 'danger')
 
-
+###############################################################
 @app.route("/" , methods = ['GET'])
 def basic_display():
     
      return "Nothing here for now"
+
+@app.route('/board/new', methods=["GET", "POST"])
+def messages_add():
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    form = MessageForm()
+
+    if form.validate_on_submit():
+        msg = Message(text=form.text.data)
+        g.user.messages.append(msg)
+        db.session.commit()
+
+        return redirect(f"/users/{g.user.id}")
+
+    return render_template('messages/new.html', form=form)
+
+@app.route('/list/new', methods=["GET", "POST"])
+def messages_add():
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    form = MessageForm()
+
+    if form.validate_on_submit():
+        msg = Message(text=form.text.data)
+        g.user.messages.append(msg)
+        db.session.commit()
+
+        return redirect(f"/users/{g.user.id}")
+
+    return render_template('messages/new.html', form=form)
+
+
+@app.route('/card/new', methods=["GET", "POST"])
+def messages_add():
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    form = MessageForm()
+
+    if form.validate_on_submit():
+        msg = Message(text=form.text.data)
+        g.user.messages.append(msg)
+        db.session.commit()
+
+        return redirect(f"/users/{g.user.id}")
+
+    return render_template('messages/new.html', form=form)

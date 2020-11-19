@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Warbler</title>
+  <title>TRELLO</title>
 
   <link rel="stylesheet"
         href="https://unpkg.com/bootstrap/dist/css/bootstrap.css">
@@ -23,19 +23,11 @@
     <div class="navbar-header">
       <a href="/" class="navbar-brand">
         <img src="/static/images/warbler-logo.png" alt="logo">
-        <span>Warbler</span>
+        <span>TRELLO</span>
       </a>
     </div>
     <ul class="nav navbar-nav navbar-right">
       {% if request.endpoint != None %}
-      <li>
-        <form class="navbar-form navbar-right" action="/users">
-          <input name="q" class="form-control" placeholder="Search Warbler" id="search">
-          <button class="btn btn-default">
-            <span class="fa fa-search"></span>
-          </button>
-        </form>
-      </li>
       {% endif %}
       {% if not g.user %}
       <li><a href="/signup">Sign up</a></li>
@@ -43,10 +35,9 @@
       {% else %}
       <li>
         <a href="/users/{{ g.user.id }}">
-          <img src="{{ g.user.image_url }}" alt="{{ g.user.username }}">
+         My Profile
         </a>
       </li>
-      <li><a href="/messages/new">New Message</a></li>
       <li><a href="/logout">Log out</a></li>
       {% endif %}
     </ul>
