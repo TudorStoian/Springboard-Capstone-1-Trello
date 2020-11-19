@@ -41,7 +41,7 @@ class CardForm(FlaskForm):
         "name",
         validators=[InputRequired(), Length(min=1, max=20)],
     )
-   content = StringField(
+    content = StringField(
         "content",
         validators=[],
     )

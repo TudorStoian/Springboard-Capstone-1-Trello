@@ -136,6 +136,10 @@ class Card(db.Model):
         nullable=False,
     )
 
+    content = db.Column(
+        db.Text,
+    )
+
 
     card_status = db.Column(
         db.Enum(CardStatusEnum), 

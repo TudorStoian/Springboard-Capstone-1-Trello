@@ -11,8 +11,8 @@ from flask import Flask, render_template, request, flash, redirect, session, g
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import RegisterForm, LoginForm #, MessageForm, UserUpdateForm
-from models import db, connect_db, User
+from forms import RegisterForm, LoginForm, BoardForm, ListForm, CardForm #, MessageForm, UserUpdateForm
+from models import db, connect_db, User, Board, List, Card
 
 
 
@@ -135,10 +135,42 @@ def logout():
 @app.route("/" , methods = ['GET'])
 def basic_display():
     
-     return "Nothing here for now"
+    """Show homepage:
 
-@app.route('/board/new', methods=["GET", "POST"])
-def messages_add():
+    - anon users: no messages
+    - logged in: 100 most recent messages of followed_users
+    """
+
+    if g.user:
+        
+        #following_id_array_plus_user = [f.id for f in g.user.following] + [g.user.id] #This collects together the id's we need to display
+        
+        
+        
+        boards = (Board
+                    .query
+                    .filter(Board.user_id.in_(g.user.id))
+                    #.order_by(Message.timestamp.desc())
+                    .limit(100)
+                    .all())
+
+        #liked_msg_ids = [msg.id for msg in g.user.likes]
+        
+
+        #print(f"liked_ids : {liked_ids}")
+        #print(f"messages: {messages}")
+        """
+        for id in messages.id:
+            if(id in liked_ids):
+                print(f"This id: {id} should be favorited!")
+        """
+        return render_template('home.html', boards = boards)
+
+    else:
+        return render_template('home-anon.html')
+
+@app.route('/user/<int:user_id>/board/new', methods=["GET", "POST"])
+def boards_add(user_id):
     """Add a message:
 
     Show form if GET. If valid, update message and redirect to user page.
@@ -148,10 +180,32 @@ def messages_add():
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    form = MessageForm()
+    form = BoardForm()
 
     if form.validate_on_submit():
-        msg = Message(text=form.text.data)
+        board = Board(text=form.text.data)
+        #db.session.add(board)
+        db.session.commit()
+
+        return redirect(f"/users/{g.user.id}")
+
+    return render_template('messages/new.html', form=form)
+
+@app.route('/user/<int:user_id>/board/<int:board_id>/list/new', methods=["GET", "POST"])
+def lists_add(board_id):
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    form = ListForm()
+
+    if form.validate_on_submit():
+        msg = List(text=form.text.data)
         g.user.messages.append(msg)
         db.session.commit()
 
@@ -159,8 +213,9 @@ def messages_add():
 
     return render_template('messages/new.html', form=form)
 
-@app.route('/list/new', methods=["GET", "POST"])
-def messages_add():
+
+@app.route('/user/<int:user_id>/board/<int:board_id>/list/<int:list_id>/card/new', methods=["GET", "POST"])
+def cards_add(list_id):
     """Add a message:
 
     Show form if GET. If valid, update message and redirect to user page.
@@ -170,33 +225,10 @@ def messages_add():
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    form = MessageForm()
+    form = CardForm()
 
     if form.validate_on_submit():
-        msg = Message(text=form.text.data)
-        g.user.messages.append(msg)
-        db.session.commit()
-
-        return redirect(f"/users/{g.user.id}")
-
-    return render_template('messages/new.html', form=form)
-
-
-@app.route('/card/new', methods=["GET", "POST"])
-def messages_add():
-    """Add a message:
-
-    Show form if GET. If valid, update message and redirect to user page.
-    """
-
-    if not g.user:
-        flash("Access unauthorized.", "danger")
-        return redirect("/")
-
-    form = MessageForm()
-
-    if form.validate_on_submit():
-        msg = Message(text=form.text.data)
+        msg = Card(text=form.text.data)
         g.user.messages.append(msg)
         db.session.commit()
 
