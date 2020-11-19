@@ -19,15 +19,20 @@ class User(db.Model):
 
     __tablename__ = "users"
 
-    username = db.Column(
-        db.String(20),
-        nullable=False,
-        unique=True,
+    id = db.Column(
+        db.Integer,
         primary_key=True,
     )
+
+    username = db.Column(
+        db.Text,
+        nullable=False,
+        unique=True,
+    )
+
     password = db.Column(db.Text, nullable=False)
 
-    feedback = db.relationship("Feedback", backref="user", cascade="all,delete")
+    #feedback = db.relationship("Feedback", backref="user", cascade="all,delete")
 
     # start of convenience class methods
 

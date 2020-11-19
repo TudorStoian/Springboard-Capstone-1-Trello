@@ -77,12 +77,13 @@ def signup():
 
     if form.validate_on_submit():
         try:
-            user = User.signup(
+            user = User.register(
                 username=form.username.data,
                 password=form.password.data
             )
             db.session.commit()
 
+        
         except IntegrityError:
             flash("Username already taken", 'danger')
             return render_template('users/signup.html', form=form)
