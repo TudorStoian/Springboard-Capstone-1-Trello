@@ -164,4 +164,4 @@ class Card(db.Model):
     def is_part_of_list(self, target_list):
         """Is this user followed by `other_user`?"""
 
-        return( self.list_id == target_list.list_id)  
+        return( self.list_id == target_list.id)  

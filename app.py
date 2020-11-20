@@ -291,4 +291,29 @@ def cards_add(user_id, board_id, list_id):
 
         return redirect(f"/user/{user_id}/board/{board_id}")
 
-    return render_template('list/new.html', form=form)
+    return render_template('card/new.html', form=form)
+
+
+@app.route('/user/<int:user_id>/board/<int:board_id>/list/<int:list_id>/card/<int:card_id>/delete', methods=["POST"])
+def delete_card(user_id, board_id, list_id,card_id):
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized 1.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+
+    #################### TODO: CHECK FOR BOARD, LIST ID and CARD ID
+
+    card = Card.query.get(card_id)
+    db.session.delete(card)
+    db.session.commit()
+
+    return redirect(f"/user/{user_id}/board/{board_id}")
