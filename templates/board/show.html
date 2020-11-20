@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="bg"></div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <ul class="list-group no-hover" id="messages">
+        <li class="list-group-item">
+
+
+                    
+          <div class="message-area">
+            <div class="message-heading">
+
+              <div>
+                CREATED LISTS:
+              </div>
+
+              <ul class="list-group" id="messages">
+              {% for list in lists %}
+                <li>
+                  <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}">{{list.name}}</a>
+
+                  <form method="POST"
+                        action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/delete">
+                    <button class="btn btn-outline-danger">Delete List</button>
+                  </form>
+                </li>
+
+                <ul>
+                  {% for card in cards %}
+
+                  {% if card.is_part_of_list( list) %}
+                    <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}">{{card.name}}</a>
+                    <a>{{card.content}}</a>
+                    <form method="POST"
+                          action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/delete">
+                      <button class="btn btn-outline-danger">Delete</button>
+                    </form>
+                  {% endif %}
+
+                  {% endfor %}
+                  
+                </ul>
+                <form method="POST"
+                  action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/new">
+                  <button class="btn btn-outline-danger">Create new card</button>
+                </form>
+              {% endfor %}
+              </ul>
+
+            </div>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+    <form method="POST"
+      action="/user/{{user_id}}/board/{{board_id}}/list/new">
+      <button class="btn btn-outline-danger">Create new list</button>
+    </form>
+
+
+  </div>
+
+{% endblock %}

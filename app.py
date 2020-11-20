@@ -151,7 +151,7 @@ def basic_display():
                     .query
                     .filter(Board.user_id.in_([g.user.id]))
                     #.order_by(Message.timestamp.desc())
-                    .limit(100)
+                    #.limit(100)
                     .all())
 
         #liked_msg_ids = [msg.id for msg in g.user.likes]
@@ -168,6 +168,8 @@ def basic_display():
 
     else:
         return render_template('home-anon.html')
+
+
 
 @app.route('/user/<int:user_id>/board/new', methods=["GET", "POST"])
 def boards_add(user_id):
@@ -198,52 +200,95 @@ def boards_add(user_id):
 
 
 @app.route('/user/<int:user_id>/board/<int:board_id>', methods=["GET", "POST"])
-def boards_view(user_id):
+def boards_view(user_id,board_id):
     """View a board
 
     """
 
+    if not g.user:
+        flash("Access unauthorized 1.", "danger")
+        return redirect("/")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect("/")
+
+
+    lists = (List
+            .query
+            .filter(List.board_id.in_([board_id]))
+            #.order_by(Message.timestamp.desc())
+            #.limit(100)
+            .all())
+
+    list_ids = [f.id for f in lists]
+
+    cards = (Card
+            .query
+            .filter(Card.list_id.in_(list_ids))
+            #.order_by(Message.timestamp.desc())
+            #.limit(100)
+            .all())
+
+    return render_template('board/show.html', lists = lists, user_id = user_id, board_id = board_id, cards = cards)
+
 @app.route('/user/<int:user_id>/board/<int:board_id>/list/new', methods=["GET", "POST"])
-def lists_add(board_id):
+def lists_add(user_id,board_id):
     """Add a message:
 
     Show form if GET. If valid, update message and redirect to user page.
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
-        return redirect("/")
+        flash("Access unauthorized 1.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+
+    
+    #################### TODO: CHECK FOR BOARD AND LIST ID
 
     form = ListForm()
 
     if form.validate_on_submit():
-        msg = List(name = form.name.data)
-        g.user.messages.append(msg)
+        list = List(name = form.name.data, board_id = board_id)
+        db.session.add(list)
         db.session.commit()
 
-        return redirect(f"/users/{g.user.id}")
+        return redirect(f"/user/{user_id}/board/{board_id}")
 
-    return render_template('messages/new.html', form=form)
+    return render_template('list/new.html', form=form)
 
 
 @app.route('/user/<int:user_id>/board/<int:board_id>/list/<int:list_id>/card/new', methods=["GET", "POST"])
-def cards_add(list_id):
+def cards_add(user_id, board_id, list_id):
     """Add a message:
 
     Show form if GET. If valid, update message and redirect to user page.
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
-        return redirect("/")
+        flash("Access unauthorized 1.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+
+    #################### TODO: CHECK FOR BOARD AND LIST ID
 
     form = CardForm()
 
     if form.validate_on_submit():
-        msg = Card(text=form.text.data)
-        g.user.messages.append(msg)
+        card = Card(name = form.name.data,content= form.content.data, list_id = list_id)
+        db.session.add(card)
         db.session.commit()
 
-        return redirect(f"/users/{g.user.id}")
+        return redirect(f"/user/{user_id}/board/{board_id}")
 
-    return render_template('messages/new.html', form=form)
+    return render_template('list/new.html', form=form)

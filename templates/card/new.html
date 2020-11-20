@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <form method="POST">
+      {{ form.csrf_token }}
+      <div>
+        {% if form.name.errors %}
+          {% for error in form.name.errors %}
+            <span class="text-danger">
+          {{ error }}
+        </span>
+          {% endfor %}
+        {% endif %}
+        {{ form.name(placeholder="Card name:", class="form-control", rows="3") }}
+
+        {{ form.content(placeholder="Card content:", class="form-control", rows="3") }}
+      </div>
+      <button class="btn btn-outline-success btn-block">Create new card!</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
