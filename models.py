@@ -83,8 +83,11 @@ class Board(db.Model):
 
     user_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.id', ondelete='cascade')
+        db.ForeignKey('users.id', ondelete='cascade'),
+        nullable=False
     )
+
+    user = db.relationship('User')
 
     """
     position = db.Column(
@@ -111,8 +114,11 @@ class List(db.Model):
 
     board_id = db.Column(
         db.Integer,
-        db.ForeignKey('boards.id', ondelete='cascade')
+        db.ForeignKey('boards.id', ondelete='cascade'),
+        nullable=False
     )
+
+    board = db.relationship('Board')
 
 
 
@@ -149,5 +155,8 @@ class Card(db.Model):
 
     list_id = db.Column(
         db.Integer,
-        db.ForeignKey('lists.id', ondelete='cascade')
+        db.ForeignKey('lists.id', ondelete='cascade'),
+        nullable=False
     )
+
+    list = db.relationship('List')

@@ -11,24 +11,30 @@
 
 
 
-    <div class="col-lg-6 col-md-8 col-sm-12">
+    <div>
+      CREATED BOARDS:
+    </div>
+
+    <div >
       <ul class="list-group" id="messages">
         {% for board in boards %}
           <li class="list-group-item">
-            <a href="/user/{{int:user_id}}/board/{{board.id}}" class="message-link"/>
-            <a href="/user/{{int:user_id}}/board/{{board.id}}">
-            </a>
-            <form method="POST" action="/user/<int:user_id>/board/<int:board_id>/list/<int:list_id>/card/new" id="messages-form">
-              <button class="
-                btn 
-                btn-sm 
-                "
-              >CREATE A NEW BOARD <!-- Consider adding a plus symbol here-->
-              </button>
-            </form>
+            <a href="/user/{{ g.user.id}}/board/{{board.id}}">{{board.name}}</a>
           </li>
         {% endfor %}
       </ul>
+    </div>
+
+
+    <div>
+      <form method="GET" action="/user/{{ g.user.id}}/board/new" id="messages-form">
+        <button class="
+          btn 
+          btn-sm 
+          "
+        >CREATE A NEW BOARD <!-- Consider adding a plus symbol here-->
+        </button>
+      </form>
     </div>
 
   </div>

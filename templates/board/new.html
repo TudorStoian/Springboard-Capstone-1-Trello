@@ -6,16 +6,16 @@
       <form method="POST">
         {{ form.csrf_token }}
         <div>
-          {% if form.text.errors %}
-            {% for error in form.text.errors %}
+          {% if form.name.errors %}
+            {% for error in form.name.errors %}
               <span class="text-danger">
             {{ error }}
           </span>
             {% endfor %}
           {% endif %}
-          {{ form.text(placeholder="What's happening?", class="form-control", rows="3") }}
+          {{ form.name(placeholder="Board name:", class="form-control", rows="3") }}
         </div>
-        <button class="btn btn-outline-success btn-block">Add my message!</button>
+        <button class="btn btn-outline-success btn-block">Create new board!</button>
       </form>
     </div>
   </div>

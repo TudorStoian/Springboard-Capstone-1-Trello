@@ -149,7 +149,7 @@ def basic_display():
         
         boards = (Board
                     .query
-                    .filter(Board.user_id.in_(g.user.id))
+                    .filter(Board.user_id.in_([g.user.id]))
                     #.order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())
@@ -177,19 +177,31 @@ def boards_add(user_id):
     """
 
     if not g.user:
-        flash("Access unauthorized.", "danger")
+        flash("Access unauthorized 1.", "danger")
+        return redirect("/")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
         return redirect("/")
 
     form = BoardForm()
 
     if form.validate_on_submit():
-        board = Board(text=form.text.data)
-        #db.session.add(board)
+        board = Board(name = form.name.data, user_id = g.user.id)
+        db.session.add(board)
         db.session.commit()
 
-        return redirect(f"/users/{g.user.id}")
+        return redirect(f"/")
 
-    return render_template('messages/new.html', form=form)
+    return render_template('board/new.html', form=form)
+
+
+@app.route('/user/<int:user_id>/board/<int:board_id>', methods=["GET", "POST"])
+def boards_view(user_id):
+    """View a board
+
+    """
 
 @app.route('/user/<int:user_id>/board/<int:board_id>/list/new', methods=["GET", "POST"])
 def lists_add(board_id):
@@ -205,7 +217,7 @@ def lists_add(board_id):
     form = ListForm()
 
     if form.validate_on_submit():
-        msg = List(text=form.text.data)
+        msg = List(name = form.name.data)
         g.user.messages.append(msg)
         db.session.commit()
 
