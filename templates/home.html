@@ -23,8 +23,8 @@
           </li>
 
           <form method="POST"
-          action="/user/{{user_id}}/board/{{board_id}}/delete">
-          <button class="btn btn-outline-danger">Delete this board</button>
+          action="/user/{{g.user.id}}/board/{{board.id}}/delete">
+          <button class="btn btn-outline-danger">Delete</button>
           </form>
         {% endfor %}
       </ul>
