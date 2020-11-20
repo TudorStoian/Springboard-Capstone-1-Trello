@@ -233,6 +233,32 @@ def boards_view(user_id,board_id):
 
     return render_template('board/show.html', lists = lists, user_id = user_id, board_id = board_id, cards = cards)
 
+
+@app.route('/user/<int:user_id>/board/<int:board_id>/delete', methods=["POST"])
+def delete_board(user_id, board_id):
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized 1.", "danger")
+        return redirect(f"/user/{user_id}/")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect(f"/user/{user_id}/")
+
+    #################### TODO: CHECK FOR BOARD, LIST ID and CARD ID
+
+    board = Board.query.get(board_id)
+    db.session.delete(board)
+    db.session.commit()
+
+    return redirect(f"/")
+
+
 @app.route('/user/<int:user_id>/board/<int:board_id>/list/new', methods=["GET", "POST"])
 def lists_add(user_id,board_id):
     """Add a message:
@@ -262,6 +288,32 @@ def lists_add(user_id,board_id):
         return redirect(f"/user/{user_id}/board/{board_id}")
 
     return render_template('list/new.html', form=form)
+
+
+@app.route('/user/<int:user_id>/board/<int:board_id>/list/<int:list_id>/delete', methods=["POST"])
+def delete_list(user_id, board_id, list_id):
+    """Add a message:
+
+    Show form if GET. If valid, update message and redirect to user page.
+    """
+
+    if not g.user:
+        flash("Access unauthorized 1.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+
+    #################### TODO: CHECK FOR BOARD, LIST ID and CARD ID
+
+    list = List.query.get(list_id)
+    db.session.delete(list)
+    db.session.commit()
+
+    return redirect(f"/user/{user_id}/board/{board_id}")
+
 
 
 @app.route('/user/<int:user_id>/board/<int:board_id>/list/<int:list_id>/card/new', methods=["GET", "POST"])

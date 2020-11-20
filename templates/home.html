@@ -21,6 +21,11 @@
           <li class="list-group-item">
             <a href="/user/{{ g.user.id}}/board/{{board.id}}">{{board.name}}</a>
           </li>
+
+          <form method="POST"
+          action="/user/{{user_id}}/board/{{board_id}}/delete">
+          <button class="btn btn-outline-danger">Delete this board</button>
+          </form>
         {% endfor %}
       </ul>
     </div>
