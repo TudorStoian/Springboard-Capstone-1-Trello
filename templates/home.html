@@ -18,14 +18,15 @@
     <div >
       <ul class="list-group" id="messages">
         {% for board in boards %}
-          <li class="list-group-item">
-            <a href="/user/{{ g.user.id}}/board/{{board.id}}">{{board.name}}</a>
-          </li>
+          <li class="list-group-item" id="list-group-item">
+            <a href="/user/{{ g.user.id}}/board/{{board.id}}">{{board.name}}</a> <a> GRAB HERE</a>
+          
 
           <form method="POST"
           action="/user/{{g.user.id}}/board/{{board.id}}/delete">
           <button class="btn btn-outline-danger">Delete</button>
           </form>
+        </li>
         {% endfor %}
       </ul>
     </div>
@@ -43,4 +44,13 @@
     </div>
 
   </div>
+
+  <script>
+    $(function() {
+    $(".list-group").sortable({
+      connectWith: "ul",
+      delay: 150
+    })
+  });
+  </script>
 {% endblock %}

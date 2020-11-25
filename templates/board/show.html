@@ -33,12 +33,14 @@
                   {% for card in cards %}
 
                   {% if card.is_part_of_list( list) %}
+                  <div class="card-group">
                     <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}">{{card.name}}</a>
                     <a>{{card.content}}</a>
                     <form method="POST"
                           action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/delete">
                       <button class="btn btn-outline-danger">Delete</button>
                     </form>
+                  </div>
                   {% endif %}
 
                   {% endfor %}
@@ -67,4 +69,15 @@
 
   </div>
 
+  <script>
+    $(function() {
+    $(".list-group").sortable({
+      delay: 150
+    })
+  });
+  </script>
+
+
+
+</script>
 {% endblock %}
