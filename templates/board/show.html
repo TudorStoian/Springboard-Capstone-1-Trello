@@ -29,11 +29,11 @@
                   </form>
                 </li>
 
-                <ul>
+                <ul class="card-group">
                   {% for card in cards %}
 
                   {% if card.is_part_of_list( list) %}
-                  <div class="card-group">
+                  <div>
                     <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}">{{card.name}}</a>
                     <a>{{card.content}}</a>
                     <form method="POST"
@@ -77,7 +77,11 @@
   });
   </script>
 
-
-
+<script>
+  $(function() {
+  $(".card-group").sortable({
+    delay: 150
+  })
+});
 </script>
 {% endblock %}
