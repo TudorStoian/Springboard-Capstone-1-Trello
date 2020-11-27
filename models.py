@@ -146,6 +146,11 @@ class Card(db.Model):
         db.Text,
     )
 
+    """
+    date = db.Column(
+        db.Date,
+    )
+    """
 
     card_status = db.Column(
         db.Enum(CardStatusEnum), 

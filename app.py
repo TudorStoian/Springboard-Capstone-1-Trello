@@ -306,8 +306,6 @@ def delete_list(user_id, board_id, list_id):
         flash("Access unauthorized 2.", "danger")
         return redirect(f"/user/{user_id}/board/{board_id}")
 
-    #################### TODO: CHECK FOR BOARD, LIST ID and CARD ID
-
     list = List.query.get(list_id)
     db.session.delete(list)
     db.session.commit()
@@ -337,7 +335,7 @@ def cards_add(user_id, board_id, list_id):
     form = CardForm()
 
     if form.validate_on_submit():
-        card = Card(name = form.name.data,content= form.content.data, list_id = list_id)
+        card = Card(name = form.name.data,content= form.content.data, list_id = list_id) #date = form.date.data
         db.session.add(card)
         db.session.commit()
 

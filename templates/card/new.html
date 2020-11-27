@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>-->
+
 <div class="row justify-content-center">
   <div class="col-md-6">
     <form method="POST">
@@ -16,6 +18,13 @@
         {{ form.name(placeholder="Card name:", class="form-control", rows="3") }}
 
         {{ form.content(placeholder="Card content:", class="form-control", rows="3") }}
+
+        
+        <!--<label class="control-label" for="date">Date</label>-->
+        <!--<input class="form-control" id="date" name="date" placeholder="DD/MM/YYY" type="text"/> -->
+        
+
+        <!--{{ form.date(placeholder="Card date to set reminder:", class="form-control", rows="3") }} -->
       </div>
       <button class="btn btn-outline-success btn-block">Create new card!</button>
     </form>
