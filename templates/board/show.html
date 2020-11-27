@@ -29,7 +29,7 @@
                   </form>
                 </li>
 
-                <ul class="card-group" id= "card-group">
+                <ul class="card-group">
                   {% for card in cards %}
 
                   {% if card.is_part_of_list( list) %}
@@ -71,7 +71,7 @@
 
   <script>
     $(function() {
-    $(".list-group, .card-group").sortable({
+    $(".list-group").sortable({
       delay: 150
     })
   });
