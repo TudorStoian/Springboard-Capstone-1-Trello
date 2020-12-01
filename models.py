@@ -165,6 +165,10 @@ class Card(db.Model):
         db.Integer
     )
 
+    date = db.Column(
+        db.Date
+    )
+
     list_id = db.Column(
         db.Integer,
         db.ForeignKey('lists.id', ondelete='cascade'),
