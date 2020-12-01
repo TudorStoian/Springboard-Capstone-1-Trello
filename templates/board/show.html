@@ -29,10 +29,11 @@
                   </form>
                 </li>
 
-                <ul class="card-group">
+                <ul class="card-group" id="card-group">
                   {% for card in cards %}
 
                   {% if card.is_part_of_list( list) %}
+                  
                   <div>
                     <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}">{{card.name}}</a>
                     <a>{{card.content}}</a>
@@ -40,6 +41,7 @@
                           action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/delete">
                       <button class="btn btn-outline-danger">Delete</button>
                     </form>
+                    <br>
                   </div>
                   {% endif %}
 
@@ -69,14 +71,20 @@
 
   </div>
 
+
+  
   <script>
     $(function() {
-    $(".list-group").sortable({
+    $(".list-group, .card-group").sortable({
       delay: 150
     })
+    
+    
   });
   </script>
 
+
+ <!--
 <script>
   $(function() {
   $(".card-group").sortable({
@@ -84,4 +92,15 @@
   })
 });
 </script>
+-->
+
+<!--
+<script>
+  $(function() {
+  $("#card-group").sortable({
+    delay: 150
+  })
+});
+</script>
+ -->
 {% endblock %}
