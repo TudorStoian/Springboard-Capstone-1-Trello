@@ -81,6 +81,10 @@ class Board(db.Model):
         nullable=False,
     )
 
+    position = db.Column(
+        db.Integer
+    )
+
     user_id = db.Column(
         db.Integer,
         db.ForeignKey('users.id', ondelete='cascade'),
@@ -110,6 +114,10 @@ class List(db.Model):
     name = db.Column(
         db.Text,
         nullable=False,
+    )
+
+    position = db.Column(
+        db.Integer
     )
 
     board_id = db.Column(
@@ -151,6 +159,10 @@ class Card(db.Model):
         db.Enum(CardStatusEnum), 
         default= CardStatusEnum.WIP,
         nullable=False
+    )
+
+    position = db.Column(
+        db.Integer
     )
 
     list_id = db.Column(
