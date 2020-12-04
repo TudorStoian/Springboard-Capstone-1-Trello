@@ -42,6 +42,11 @@
                     
                     <!--{% endif %}-->
                     <form method="POST"
+                          action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/create_event">
+                      <button class="btn btn-outline">Create event</button>
+                    </form>
+
+                    <form method="POST"
                           action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/delete">
                       <button class="btn btn-outline-danger">Delete</button>
                     </form>

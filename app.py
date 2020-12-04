@@ -13,7 +13,7 @@ from sqlalchemy.exc import IntegrityError
 
 from forms import RegisterForm, LoginForm, BoardForm, ListForm, CardForm #, MessageForm, UserUpdateForm
 from models import db, connect_db, User, Board, List, Card
-
+from google_calendar import create_event
 
 
 from werkzeug.exceptions import Unauthorized
