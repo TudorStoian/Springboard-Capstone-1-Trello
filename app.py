@@ -337,7 +337,7 @@ def cards_add(user_id, board_id, list_id):
     form = CardForm()
 
     if form.validate_on_submit():
-        card = Card(name = form.name.data,content= form.content.data, list_id = list_id)
+        card = Card(name = form.name.data,content= form.content.data, date= form.date.data, list_id = list_id)
         db.session.add(card)
         db.session.commit()
 

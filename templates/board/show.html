@@ -37,6 +37,10 @@
                   <div>
                     <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}">{{card.name}}</a>
                     <a>{{card.content}}</a>
+                    <a>{{card.date}}</a>
+                    <!--{% if card.date == "" %}-->
+                    
+                    <!--{% endif %}-->
                     <form method="POST"
                           action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/delete">
                       <button class="btn btn-outline-danger">Delete</button>

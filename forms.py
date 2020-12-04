@@ -1,4 +1,4 @@
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, DateField
 from wtforms.validators import InputRequired, Length, NumberRange, Email, Optional
 from flask_wtf import FlaskForm
 
@@ -43,5 +43,9 @@ class CardForm(FlaskForm):
     )
     content = StringField(
         "content",
+        validators=[],
+    )
+    date = StringField(
+        "date",
         validators=[],
     )
