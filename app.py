@@ -337,7 +337,15 @@ def cards_add(user_id, board_id, list_id):
     form = CardForm()
 
     if form.validate_on_submit():
-        card = Card(name = form.name.data,content= form.content.data, date= form.date.data, list_id = list_id)
+        
+        cards = (Card
+            .query
+            .filter(Card.list_id.in_([list_id]))
+            #.order_by(Message.timestamp.desc())
+            #.limit(100)
+            .all())
+
+        card = Card(name = form.name.data,content= form.content.data, date= form.date.data, list_id = list_id,position = len(cards))
         db.session.add(card)
         db.session.commit()
 
@@ -369,3 +377,19 @@ def delete_card(user_id, board_id, list_id,card_id):
     db.session.commit()
 
     return redirect(f"/user/{user_id}/board/{board_id}")
+
+"""
+######### CALENDAR ROUTE ######
+@app.route('/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/create_event', methods=["POST"])
+def create_event_flask(user_id, board_id, list_id,card_id):
+    return "TODO"
+
+    if not g.user:
+        flash("Access unauthorized 1.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+    
+
+    if not user_id == g.user.id:
+        flash("Access unauthorized 2.", "danger")
+        return redirect(f"/user/{user_id}/board/{board_id}")
+"""
