@@ -431,3 +431,16 @@ nav + .container {
 .message-404 .form-inline input {
   flex: 1;
 }
+
+
+/* ======================= Sortable list stuff   */
+
+.placeholder {
+  border: 1px solid orange;
+  background-color: #fffffd;
+}
+
+#placeholder {
+  border: 1px solid orange;
+  background-color: #fffffd;
+}
