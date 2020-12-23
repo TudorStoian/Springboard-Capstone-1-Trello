@@ -390,8 +390,6 @@ nav + .container {
 #messages.no-hover .message-heading {
   display: flex;
   justify-content: space-between;
-  height: 47px;
-  margin-top: 3px;
 }
 
 #messages.no-hover .message-heading .btn {
@@ -443,4 +441,10 @@ nav + .container {
 #placeholder {
   border: 1px solid orange;
   background-color: #fffffd;
+}
+
+/* ======================= Making the cards, lists and boards look good   */
+.card-message-box {
+  border: 1px solid black;
+  border-radius: 10px;
 }

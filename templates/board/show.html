@@ -34,7 +34,7 @@
 
                   {% if card.is_part_of_list( list) %}
                   
-                  <div>
+                  <div class = "card-message-box">
                     <a href="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}">{{card.name}}</a>
                     <a>{{card.content}}</a>
                     <a>{{card.date}}</a>
@@ -50,7 +50,6 @@
                           action="/user/{{user_id}}/board/{{board_id}}/list/{{list.id}}/card/{{card.id}}/delete">
                       <button class="btn btn-outline-danger">Delete</button>
                     </form>
-                    <br>
                   </div>
                   {% endif %}
 
