@@ -2,8 +2,6 @@
 {% block content %}
   <div>
 
-
-
     <div>
       CREATED BOARDS:
     </div>
@@ -17,7 +15,7 @@
 
           <form method="POST"
           action="/user/{{g.user.id}}/board/{{board.id}}/delete">
-          <button class="btn btn-outline-danger">Delete</button>
+          <button class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
           </form>
         </li>
         {% endfor %}
@@ -26,13 +24,13 @@
 
 
     <div>
-      <form method="GET" action="/user/{{ g.user.id}}/board/new" id="messages-form">
+      <form method="GET" action="/user/{{ g.user.id}}/board/new" >
         <button class="
           btn 
           btn-sm
           btn-outline-primary 
           "
-        >CREATE A NEW BOARD <!-- Consider adding a plus symbol here-->
+        ><i class="fas fa-plus"></i> CREATE A NEW BOARD <!-- Consider adding a plus symbol here-->
         </button>
       </form>
     </div>
