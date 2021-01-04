@@ -10,18 +10,23 @@
           {% for error in form.name.errors %}
             <span class="text-danger">
           {{ error }}
-        </span>
+          </span>
           {% endfor %}
         {% endif %}
         {{ form.name(placeholder="Card name:", class="form-control", rows="3") }}
 
         {{ form.content(placeholder="Card content:", class="form-control", rows="3") }}
 
-        {{ form.date(placeholder="Card date:", class="form-control", rows="3") }}
+        <p>Date: <input type="text" id="datepicker" name="date"></p>
       </div>
       <button class="btn btn-outline-success btn-block">Create new card!</button>
     </form>
   </div>
 </div>
 
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+</script>
 {% endblock %}
